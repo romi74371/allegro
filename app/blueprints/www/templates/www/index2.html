@@ -1,0 +1,22 @@
+{% extends 'www_base.html' %}
+{% block title %}Welcome to the Moon{% endblock %}
+{% block body %}
+    {{super()}}
+    <h1>Welcome to the Moon</h1>
+    {% if orders.count > 0 %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                       	<td>{{order.itemTitle}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}  

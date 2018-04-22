@@ -1,0 +1,57 @@
+{% extends 'www_base.html' %}
+{% block title %}Welcome to the Moon{% endblock %}
+{% block body %}
+    {{super()}}
+    {{ response.itemsCount }}
+    {% for item in response.categoriesList.categoriesPath.item %}
+        -> {{ item.categoryName }}
+    {% endfor %}
+
+    <table border="1">
+        <tr>
+            <td>
+                {% if response.categoriesList.categoriesTree.item.count > 0 %}
+                    <table border="0">
+                        <tbody>
+                            {% for item in
+                            response.categoriesList.categoriesTree.item %}
+                                <tr>
+                                    <td><a href="{{ url_for('mod_www.www_category',
+                                            category_id=item.categoryId) }}">{{
+                                            item.categoryName }}</a>
+                                        ({{item.categoryItemsCount}})</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </td>
+            <td>
+                {% if response.itemsList.item.count > 0 %}
+                    <table border="0">
+                        <thead>
+                                <th>Nazov</th>
+                                <th>Cena bez dopravy</th>
+                                <th>Cena s dopravou</th>
+                                <th>Fotka</th>
+                        </thead>
+                        <tbody>
+                            {% for item in response.itemsList.item %}
+                                <tr>
+                                    <td>{{item.itemTitle}}</td>
+                                    <td>{{item.priceInfo.item[0].priceValue}}</td>
+                                    <td>{{item.priceInfo.item[1].priceValue}}</td>
+                                    {% if item.photosInfo %}
+                                    <td><img
+                                        src="{{item.photosInfo.item[0].photoUrl}}"
+                                        /></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+{% endblock %}  
